@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alejandra — 6 Meses ♥</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#d4a853;--rose:#e8a4b8;--cream:#faf0e6;--bg:#05050f}
+
+html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-family:'Lato',sans-serif;color:var(--cream)}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── Scene engine ── */
+.scene{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(.8rem,3vw,2rem);
+  opacity:0;pointer-events:none;
+  transition:opacity 1.5s ease;
+  z-index:10;overflow:hidden
+}
+.scene.active{opacity:1;pointer-events:auto}
+.scene.out{opacity:0}
+
+/* ── Intro ── */
+#s0{gap:clamp(1rem,3vh,2rem)}
+.couple-stage{
+  display:flex;align-items:flex-end;justify-content:center;
+  position:relative;width:min(380px,88vw);height:clamp(100px,22vh,160px)
+}
+.fig-mover{flex-shrink:0;transition:transform 2.7s cubic-bezier(.4,0,.2,1)}
+.fig-mover .bob{animation:bob .5s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+#m-fig{transform:translateX(-60vw)}
+#f-fig{transform:translateX(60vw)}
+#m-fig.met{transform:translateX(clamp(-3rem,-8vw,-1.5rem))}
+#f-fig.met{transform:translateX(clamp(1.5rem,8vw,3rem))}
+.psv line,.psv path{fill:none;stroke:currentColor;stroke-linecap:round}
+.psv .solid{fill:currentColor;stroke:none}
+.male-c{color:#d4a853}.female-c{color:#e8a4b8}
+#intro-heart{
+  position:absolute;bottom:55%;left:50%;
+  transform:translateX(-50%) scale(0);
+  opacity:0;font-size:clamp(2rem,6vw,3rem);color:var(--rose);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.34,1.56,.64,1);
+  filter:drop-shadow(0 0 14px rgba(232,164,184,.7));pointer-events:none
+}
+#intro-heart.show{opacity:1;transform:translateX(-50%) scale(1);animation:hfloat 2.5s ease-in-out infinite .7s}
+@keyframes hfloat{
+  0%,100%{transform:translateX(-50%) scale(1) translateY(0)}
+  50%{transform:translateX(-50%) scale(1.1) translateY(-5px)}
+}
+#intro-title{text-align:center;opacity:0;transform:translateY(12px);transition:opacity 1.1s ease,transform 1.1s ease}
+#intro-title.show{opacity:1;transform:translateY(0)}
+#intro-title .big{
+  font-family:'Dancing Script',cursive;font-size:clamp(2.8rem,8vw,5rem);
+  color:var(--gold);line-height:1;filter:drop-shadow(0 0 24px rgba(212,168,83,.45));
+  animation:gpulse 3s ease-in-out infinite
+}
+@keyframes gpulse{
+  0%,100%{filter:drop-shadow(0 0 24px rgba(212,168,83,.45))}
+  50%{filter:drop-shadow(0 0 52px rgba(212,168,83,.8))}
+}
+#intro-title .sub{font-size:clamp(.7rem,1.8vw,.9rem);letter-spacing:.32em;text-transform:uppercase;opacity:.38;margin-top:.4rem}
+
+/* ── Month scene ── */
+.ms{gap:0}
+.mbadge{
+  display:flex;flex-direction:column;align-items:center;
+  margin-bottom:clamp(.5rem,1.5vh,1rem);
+  opacity:0;transform:translateY(-10px);transition:opacity .8s ease .1s,transform .8s ease .1s
+}
+.mbadge.show{opacity:1;transform:none}
+.mbadge .n{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2.2rem,6vw,4rem);line-height:1}
+.mbadge .t{font-family:'Dancing Script',cursive;font-size:clamp(1.1rem,3vw,1.8rem);color:var(--rose);margin-top:.1rem}
+.mbody{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.8rem,2.5vw,2rem);width:100%;max-width:860px;align-items:center}
+@media(max-width:580px){.mbody{grid-template-columns:1fr}.mbody .pcol{order:-1}}
+.mbody.flip .pcol{order:2}.mbody.flip .tcol{order:1}
+.pcol{display:flex;align-items:center;justify-content:center}
+.pframe{
+  width:100%;max-width:300px;aspect-ratio:4/5;max-height:min(360px,42vh);
+  border-radius:14px;overflow:hidden;position:relative;
+  background:rgba(255,255,255,.03);border:1px solid rgba(212,168,83,.2);
+  box-shadow:0 8px 36px rgba(0,0,0,.55);
+  opacity:0;transform:scale(.95);transition:opacity .9s ease .3s,transform .9s ease .3s
+}
+.pframe.show{opacity:1;transform:scale(1)}
+.pframe img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s ease;position:relative;z-index:2}
+.pframe img.ok{opacity:1}
+.pframe img.err{display:none}
+.pph{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem}
+.pph .ic{font-size:2rem;opacity:.3}
+.pph .nm{font-size:.65rem;letter-spacing:.1em;opacity:.2;font-family:monospace}
+.tcol{
+  display:flex;flex-direction:column;gap:clamp(.5rem,1.5vh,.9rem);
+  opacity:0;transform:translateX(22px);transition:opacity .9s ease .5s,transform .9s ease .5s
+}
+.mbody.flip .tcol{transform:translateX(-22px)}
+.tcol.show{opacity:1;transform:none!important}
+.mt{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1rem,2.5vw,1.5rem);line-height:1.25}
+.ms-txt{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(.78rem,1.75vw,1rem);line-height:1.8;opacity:.9}
+.tags{display:flex;flex-wrap:wrap;gap:.3rem .7rem}
+.tag{font-size:clamp(.6rem,1.3vw,.75rem);letter-spacing:.1em;text-transform:uppercase;opacity:.4}
+
+/* ── Heart-box scene ── */
+#s7{padding:0}
+#hb-canvas{position:absolute;inset:0;width:100%;height:100%}
+
+/* ── Final ── */
+#s8{gap:1rem}
+#s8 .fn{
+  font-family:'Dancing Script',cursive;font-size:clamp(3rem,10vw,6rem);
+  color:var(--gold);line-height:1;filter:drop-shadow(0 0 32px rgba(212,168,83,.5));
+  animation:gpulse 2.5s ease-in-out infinite
+}
+#s8 .fm{font-family:'Playfair Display',serif;font-size:clamp(.88rem,2.1vw,1.2rem);line-height:1.85;max-width:500px;text-align:center}
+#s8 .fm em{font-style:italic;color:var(--rose)}
+#bigheart{font-size:clamp(2.5rem,7vw,3.8rem);cursor:pointer;user-select:none;animation:hbeat 1.3s ease-in-out infinite;transition:transform .15s ease}
+#bigheart:active{transform:scale(.82)}
+@keyframes hbeat{0%,100%{transform:scale(1)}14%{transform:scale(1.22)}28%{transform:scale(1)}42%{transform:scale(1.12)}56%{transform:scale(1)}}
+#s8 .hint{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;opacity:.22}
+
+/* ── Nav ── */
+#dots{position:fixed;bottom:1.6rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;z-index:30}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(250,240,230,.2);cursor:pointer;transition:background .3s,transform .3s;border:none;padding:0}
+.dot.on{background:var(--gold);transform:scale(1.5)}
+#skip{position:fixed;bottom:3.8rem;right:1.6rem;font-size:.65rem;letter-spacing:.17em;text-transform:uppercase;opacity:.22;cursor:pointer;z-index:30;background:none;border:none;color:var(--cream);transition:opacity .3s}
+#skip:hover{opacity:.6}
+
+/* ── Petals ── */
+.petal{position:fixed;top:-5vh;pointer-events:none;z-index:5;animation:pfall linear forwards}
+@keyframes pfall{0%{opacity:0;transform:translateY(0) rotate(0deg)}10%{opacity:.6}90%{opacity:.35}100%{opacity:0;transform:translateY(110vh) rotate(520deg)}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<!-- ═══ 0: Intro ═══════════════════════════════════════════════════ -->
+<section class="scene" id="s0">
+  <div class="couple-stage">
+    <div class="fig-mover" id="m-fig"><div class="bob">
+      <svg class="psv male-c" viewBox="0 0 70 125" width="62" height="112">
+        <circle class="solid" cx="35" cy="16" r="13"/>
+        <line x1="35" y1="29" x2="35" y2="76" stroke-width="7"/>
+        <line x1="35" y1="47" x2="13" y2="65" stroke-width="5"/>
+        <line x1="35" y1="47" x2="58" y2="63" stroke-width="5"/>
+        <line x1="35" y1="76" x2="22" y2="112" stroke-width="6"/>
+        <line x1="35" y1="76" x2="48" y2="112" stroke-width="6"/>
+      </svg>
+    </div></div>
+    <div id="intro-heart">♥</div>
+    <div class="fig-mover" id="f-fig"><div class="bob">
+      <svg class="psv female-c" viewBox="0 0 70 125" width="62" height="112">
+        <circle class="solid" cx="35" cy="16" r="13"/>
+        <path d="M23 9 Q20 22 22 38" stroke-width="3.5"/>
+        <path d="M47 9 Q50 22 48 38" stroke-width="3.5"/>
+        <line x1="35" y1="29" x2="35" y2="62" stroke-width="7"/>
+        <path class="solid" d="M22 56 L10 112 L60 112 L48 56 Z"/>
+        <line x1="35" y1="44" x2="12" y2="61" stroke-width="5"/>
+        <line x1="35" y1="44" x2="58" y2="61" stroke-width="5"/>
+      </svg>
+    </div></div>
+  </div>
+  <div id="intro-title">
+    <p class="big">Alejandra</p>
+    <p class="sub">6 meses de amor verdadero</p>
+  </div>
+</section>
+
+<!-- ═══ 1: Mes 1 ═══════════════════════════════════════════════════ -->
+<section class="scene ms" id="s1">
+  <div class="mbadge" id="b1"><span class="n" style="color:#7ab3d4">01</span><span class="t">El Sí en el Embalse</span></div>
+  <div class="mbody" id="mb1">
+    <div class="pcol"><div class="pframe" id="pf1">
+      <img src="mes1.jpg" alt="Guatavita">
+      <div class="pph"><div class="ic">📸</div><p class="nm">mes1.jpg</p></div>
+    </div></div>
+    <div class="tcol" id="tc1">
+      <h2 class="mt">El Sí en el Embalse</h2>
+      <p class="ms-txt">En una canoa, en mitad del embalse de Guatavita, en silencio, le pregunté si quería ser mi novia.<br><br>Dijo que sí. Y ese sí pesó más de lo que esperaba.<br><br>Después llegaron las velitas, la Navidad, el año nuevo — todo lo que antes celebraba solo, ahora tenía con quién.</p>
+      <div class="tags"><span class="tag">🚣 Guatavita</span><span class="tag">🕯️ Velitas</span><span class="tag">🎄 Navidad &amp; Año Nuevo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 2: Mes 2 ═══════════════════════════════════════════════════ -->
+<section class="scene ms" id="s2">
+  <div class="mbadge" id="b2"><span class="n" style="color:#7ac49a">02</span><span class="t">La Aventura Imperfecta</span></div>
+  <div class="mbody flip" id="mb2">
+    <div class="tcol" id="tc2">
+      <h2 class="mt">La Aventura Imperfecta</h2>
+      <p class="ms-txt">Villavicencio nos salió perfecta… hasta que la moto decidió quedarse.<br><br>Fue frustración, fue caos, fue risa. Pero también fue la primera vez que vi cómo enfrenta el imprevisto: con calma y con gracia.<br><br>La moto se fue en carro. Nosotros volvimos con más historias que contar.</p>
+      <div class="tags"><span class="tag">🏍️ Villavicencio</span><span class="tag">🌿 Los llanos</span><span class="tag">😂 Moto varada</span></div>
+    </div>
+    <div class="pcol"><div class="pframe" id="pf2">
+      <img src="mes2.jpg" alt="Villavicencio">
+      <div class="pph"><div class="ic">📸</div><p class="nm">mes2.jpg</p></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ 3: Mes 3 ═══════════════════════════════════════════════════ -->
+<section class="scene ms" id="s3">
+  <div class="mbadge" id="b3"><span class="n" style="color:#c47aa8">03</span><span class="t">La Voz que no Olvidé</span></div>
+  <div class="mbody" id="mb3">
+    <div class="pcol"><div class="pframe" id="pf3">
+      <img src="mes3.jpg" alt="Mes 3">
+      <div class="pph"><div class="ic">📸</div><p class="nm">mes3.jpg</p></div>
+    </div></div>
+    <div class="tcol" id="tc3">
+      <h2 class="mt">La Voz que no Olvidé</h2>
+      <p class="ms-txt">Cantaste. No recuerdo exactamente qué canción, pero sí recuerdo la forma en que lo hiciste — entre gracia y gracia, la melodía se coló.<br><br>Y algo en ese momento tan simple marcó algo en mí.<br><br>Las personas que hacen de lo ordinario algo memorable son raras. Tú eres así.</p>
+      <div class="tags"><span class="tag">🎵 La canción</span><span class="tag">😄 Entre gracias</span><span class="tag">✨ Ese momento</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4: Mes 4 ═══════════════════════════════════════════════════ -->
+<section class="scene ms" id="s4">
+  <div class="mbadge" id="b4"><span class="n" style="color:#4ac4c4">04</span><span class="t">Agua, Sol y Tú</span></div>
+  <div class="mbody flip" id="mb4">
+    <div class="tcol" id="tc4">
+      <h2 class="mt">Agua, Sol y Tú</h2>
+      <p class="ms-txt">Carmen de Apicalá: sol, agua, buena comida y mejor compañía.<br><br>Comimos sin pena, tomamos con alegría, y nos tomamos mil fotos porque queríamos guardar cada segundo.<br><br>Esos días sin apuro son los mejores — los que no se planean tanto pero terminan siendo los favoritos.</p>
+      <div class="tags"><span class="tag">💧 Carmen de Apicalá</span><span class="tag">☀️ Sol y agua</span><span class="tag">📸 Mil fotos</span></div>
+    </div>
+    <div class="pcol"><div class="pframe" id="pf4">
+      <img src="mes4.jpg" alt="Carmen de Apicalá">
+      <div class="pph"><div class="ic">📸</div><p class="nm">mes4.jpg</p></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ 5: Mes 5 ═══════════════════════════════════════════════════ -->
+<section class="scene ms" id="s5">
+  <div class="mbadge" id="b5"><span class="n" style="color:#d4a853">05</span><span class="t">Caídas, Risas y un Grado</span></div>
+  <div class="mbody" id="mb5">
+    <div class="pcol"><div class="pframe" id="pf5">
+      <img src="mes5.jpg" alt="Mes 5">
+      <div class="pph"><div class="ic">📸</div><p class="nm">mes5.jpg</p></div>
+    </div></div>
+    <div class="tcol" id="tc5">
+      <h2 class="mt">Caídas, Risas y un Grado</h2>
+      <p class="ms-txt">Casi la cuenta en la bici — jajajajaja.<br>El Multiparque con la familia, esos momentos donde los nuestros son los nuestros.<br><br>Y el grado. El día que todos los que me importan estuvieron ahí.<br>Que tú estuvieras ese día lo significó todo.<br><br>Después celebramos como se debe.</p>
+      <div class="tags"><span class="tag">🚴 Bicicleta casi fatal</span><span class="tag">🎡 Multiparque</span><span class="tag">🎓 El grado</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6: Mes 6 ═══════════════════════════════════════════════════ -->
+<section class="scene ms" id="s6">
+  <div class="mbadge" id="b6"><span class="n" style="color:#9a7bc4">06</span><span class="t">El Amor que Permanece</span></div>
+  <div class="mbody flip" id="mb6">
+    <div class="tcol" id="tc6">
+      <h2 class="mt">El Amor que Permanece</h2>
+      <p class="ms-txt">No ha sido fácil. Este mes nos apretó de verdad.<br><br>Pero aquí seguimos — y eso vale más que todos los meses bonitos juntos.<br><br>El amor que nos tenemos no se mide en lo perfecto. Se mide en que, cuando todo pesa, aún queremos quedarnos.<br><br>Gracias por quedarte. Doy gracias de coincidir contigo.</p>
+      <div class="tags"><span class="tag">💛 Amor que no cede</span><span class="tag">🌙 Días difíciles</span><span class="tag">♾️ Aquí seguimos</span></div>
+    </div>
+    <div class="pcol"><div class="pframe" id="pf6">
+      <img src="mes6.jpg" alt="Mes 6">
+      <div class="pph"><div class="ic">📸</div><p class="nm">mes6.jpg</p></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ═══ 7: Corazón de recuerdos ════════════════════════════════════ -->
+<section class="scene" id="s7">
+  <canvas id="hb-canvas"></canvas>
+</section>
+
+<!-- ═══ 8: Final ═══════════════════════════════════════════════════ -->
+<section class="scene" id="s8">
+  <p class="fn">Alejandra</p>
+  <p class="fm">
+    Lo que hemos construido en estos 6 meses<br>
+    es la prueba de todo lo que somos capaces.<br><br>
+    <em>No te rindas. Yo estoy aquí.<br>
+    Te amo.</em>
+  </p>
+  <div id="bigheart" role="button" tabindex="0">♥</div>
+  <p class="hint">toca el corazón para volver al inicio</p>
+</section>
+
+<div id="dots"></div>
+<button id="skip">siguiente →</button>
+
+<script>
+// ── Stars ─────────────────────────────────────────────────────────
+const cv=document.getElementById('stars'), cx=cv.getContext('2d');
+let W,H,ST=[];
+function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight}
+function mkST(){ST=Array.from({length:200},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,ph:Math.random()*Math.PI*2,sp:Math.random()*.0006+.0003}))}
+function frame(t){cx.clearRect(0,0,W,H);for(const s of ST){const a=.2+.55*(.5+.5*Math.sin(s.ph+t*s.sp));cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${a})`;cx.fill()}requestAnimationFrame(frame)}
+rsz();mkST();requestAnimationFrame(frame);
+addEventListener('resize',()=>{rsz();mkST()});
+
+// ── Petals ────────────────────────────────────────────────────────
+const PET=['✿','❀','✾','♡','❁','·'];
+function spawnPetal(){
+  const el=document.createElement('div');el.className='petal';
+  el.textContent=PET[Math.floor(Math.random()*PET.length)];
+  el.style.left=Math.random()*100+'vw';
+  el.style.fontSize=(0.7+Math.random()*.9)+'rem';
+  el.style.color=Math.random()>.5?'#e8a4b8':'#d4a853';
+  const d=12+Math.random()*14;el.style.animation=`pfall ${d}s linear forwards`;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),d*1000)
+}
+setInterval(spawnPetal,2400);
+
+// ── Photo load/error handlers ─────────────────────────────────────
+document.querySelectorAll('.pframe img').forEach(img=>{
+  const ph=img.nextElementSibling;
+  img.addEventListener('load',()=>{img.classList.add('ok');ph.style.display='none'});
+  img.addEventListener('error',()=>img.classList.add('err'));
+});
+
+// ── Scene config ──────────────────────────────────────────────────
+const SCENES=[
+  ['s0',7500],
+  ['s1',10000],['s2',10000],['s3',10000],
+  ['s4',10000],['s5',10500],['s6',11000],
+  ['s7',13500],   // heart-box animation
+  ['s8',Infinity] // final
+];
+const SE=SCENES.map(([id])=>document.getElementById(id));
+let cur=-1,tmr=null,hbStop=null;
+
+const dotsEl=document.getElementById('dots');
+SCENES.forEach((_,i)=>{
+  const b=document.createElement('button');b.className='dot';
+  b.addEventListener('click',()=>go(i));dotsEl.appendChild(b);
+});
+function syncDots(i){dotsEl.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===i))}
+
+function go(idx){
+  if(idx>=SCENES.length)return;
+  if(hbStop){hbStop();hbStop=null}
+  if(cur>=0){
+    SE[cur].classList.remove('active');SE[cur].classList.add('out');
+    const p=cur;setTimeout(()=>SE[p].classList.remove('out'),1700);
+  }
+  cur=idx;SE[idx].classList.add('active');syncDots(idx);
+  const cleanup=enter(idx);
+  if(cleanup)hbStop=cleanup;
+  if(tmr)clearTimeout(tmr);
+  if(SCENES[idx][1]!==Infinity)tmr=setTimeout(()=>go(idx+1),SCENES[idx][1]);
+}
+
+// ── Per-scene entrance ────────────────────────────────────────────
+function enter(idx){
+  if(idx===0){
+    const mf=document.getElementById('m-fig'),ff=document.getElementById('f-fig');
+    const ih=document.getElementById('intro-heart'),it=document.getElementById('intro-title');
+    mf.classList.remove('met');ff.classList.remove('met');
+    ih.classList.remove('show');it.classList.remove('show');
+    setTimeout(()=>{mf.classList.add('met');ff.classList.add('met')},350);
+    setTimeout(()=>ih.classList.add('show'),3200);
+    setTimeout(()=>it.classList.add('show'),4300);
+    return;
+  }
+  if(idx>=1&&idx<=6){
+    const i=idx;
+    const badge=document.getElementById(`b${i}`),pframe=document.getElementById(`pf${i}`),tcol=document.getElementById(`tc${i}`);
+    [badge,pframe,tcol].forEach(el=>el&&el.classList.remove('show'));
+    setTimeout(()=>badge?.classList.add('show'),180);
+    setTimeout(()=>pframe?.classList.add('show'),420);
+    setTimeout(()=>tcol?.classList.add('show'),700);
+    return;
+  }
+  if(idx===7) return runHeartBox();
+}
+
+// ══════════════════════════════════════════════════════════════════
+// ═══ HEART BOX ANIMATION ═════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════════
+function runHeartBox(){
+  const canvas=document.getElementById('hb-canvas');
+  canvas.width=innerWidth;canvas.height=innerHeight;
+  const c=canvas.getContext('2d');
+  const CW=canvas.width,CH=canvas.height;
+  const CX=CW/2,CY=CH/2-CH*0.04;
+  const SCALE=Math.min(CW,CH)*0.33;  // radius of heart
+
+  // Photo size and positions inside the heart
+  const PS=Math.min(CW,CH)*0.13;
+
+  // Target positions: (dx,dy) as fraction of SCALE, centered on CX,CY
+  const TARGETS=[
+    {dx:-0.38,dy:-0.48,rot:-6},  // left lobe
+    {dx: 0.38,dy:-0.48,rot: 5},  // right lobe
+    {dx:-0.58,dy: 0.02,rot:-8},  // left middle
+    {dx: 0.58,dy: 0.02,rot: 7},  // right middle
+    {dx:-0.24,dy: 0.52,rot:-4},  // lower left
+    {dx: 0.24,dy: 0.52,rot: 4},  // lower right
+  ];
+
+  // Month colors for placeholders
+  const MCOL=['#7ab3d4','#7ac49a','#c47aa8','#4ac4c4','#d4a853','#9a7bc4'];
+
+  // Starting positions (off-screen corners/edges)
+  const STARTS=[
+    [CW*0.05, -PS*1.5],
+    [CW*0.95-PS, -PS*1.5],
+    [-PS*1.5, CH*0.35],
+    [CW+PS*0.5, CH*0.35],
+    [CW*0.05, CH+PS*0.5],
+    [CW*0.95-PS, CH+PS*0.5],
+  ];
+
+  // Build photo objects
+  const photos=TARGETS.map((t,i)=>{
+    const tx=CX+t.dx*SCALE-PS/2;
+    const ty=CY+t.dy*SCALE-PS/2;
+    const imgEl=document.querySelector(`#pf${i+1} img`);
+    const img=(imgEl&&imgEl.classList.contains('ok'))?imgEl:null;
+    return{
+      tx,ty,rot:t.rot,img,month:i+1,color:MCOL[i],
+      sx:STARTS[i][0],sy:STARTS[i][1],
+      cx:STARTS[i][0],cy:STARTS[i][1],
+      alpha:0,prog:0,flying:false,landed:false
+    };
+  });
+
+  // Sparkle particles
+  const sparks=[];
+  function addSparks(x,y,color){
+    for(let i=0;i<12;i++){
+      const a=(i/12)*Math.PI*2+Math.random()*.3;
+      const spd=2+Math.random()*4;
+      sparks.push({x,y,vx:Math.cos(a)*spd,vy:Math.sin(a)*spd,life:1,color,r:2+Math.random()*3});
+    }
+  }
+
+  // Easing
+  function easeOutBack(t){const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2)}
+  function easeOut3(t){return 1-Math.pow(1-t,3)}
+
+  // Draw a rounded rectangle path
+  function rrect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+    ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+    ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+  }
+
+  // Parametric heart point
+  // t=π gives the bottom tip; heart draws from tip going up
+  function hp(t){
+    const x=16*Math.pow(Math.sin(t),3);
+    const y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+    return{x:CX+x*(SCALE/16), y:CY-y*(SCALE/13)};
+  }
+
+  // Draw heart outline (progress 0→1, starting from tip)
+  function drawHeart(progress,strokeA,fillA,glow){
+    const N=300,draw=Math.ceil(N*Math.min(progress,1));
+    // Fill
+    if(fillA>0){
+      c.beginPath();
+      for(let i=0;i<=N;i++){const p=hp(Math.PI+(i/N)*Math.PI*2);i===0?c.moveTo(p.x,p.y):c.lineTo(p.x,p.y)}
+      c.closePath();c.fillStyle=`rgba(232,164,184,${fillA})`;c.fill();
+    }
+    // Glow
+    if(glow>0){c.shadowColor='#e8a4b8';c.shadowBlur=glow*30}
+    // Stroke
+    c.beginPath();
+    for(let i=0;i<=draw;i++){const p=hp(Math.PI+(i/N)*Math.PI*2);i===0?c.moveTo(p.x,p.y):c.lineTo(p.x,p.y)}
+    c.strokeStyle=`rgba(232,164,184,${strokeA})`;c.lineWidth=2.5;c.stroke();
+    c.shadowColor='transparent';c.shadowBlur=0;
+  }
+
+  // Draw a single photo card
+  function drawPhoto(p){
+    if(p.alpha<=0)return;
+    c.save();c.globalAlpha=p.alpha;
+    c.translate(p.cx+PS/2,p.cy+PS/2);c.rotate(p.rot*Math.PI/180);
+    c.shadowColor='rgba(0,0,0,.55)';c.shadowBlur=10;
+    rrect(c,-PS/2,-PS/2,PS,PS,7);c.clip();
+    if(p.img){
+      c.drawImage(p.img,-PS/2,-PS/2,PS,PS);
+    }else{
+      // Placeholder card
+      c.fillStyle='#12121f';c.fillRect(-PS/2,-PS/2,PS,PS);
+      c.fillStyle=p.color+'44';c.fillRect(-PS/2,-PS/2,PS,PS*0.55);
+      c.shadowBlur=0;c.fillStyle=p.color;
+      c.font=`bold ${PS*.38}px 'Playfair Display',serif`;
+      c.textAlign='center';c.textBaseline='middle';
+      c.fillText(`0${p.month}`,0,-PS*.05);
+    }
+    c.restore();
+    // Border
+    c.save();c.globalAlpha=p.alpha*.45;
+    c.translate(p.cx+PS/2,p.cy+PS/2);c.rotate(p.rot*Math.PI/180);
+    rrect(c,-PS/2,-PS/2,PS,PS,7);
+    c.strokeStyle='rgba(255,255,255,.55)';c.lineWidth=1.5;c.stroke();
+    c.restore();
+  }
+
+  // Timing constants (ms)
+  const T_HEART_END=2400;
+  const T_LABEL1=2800;
+  const T_PHOTO_START=3100;
+  const T_PHOTO_STEP=900;
+  const T_COMPLETE=T_PHOTO_START+6*T_PHOTO_STEP+600;
+  const T_LABEL2=T_COMPLETE+700;
+
+  let t0=null,stopped=false;
+
+  function tick(ts){
+    if(stopped)return;
+    if(!t0)t0=ts;
+    const el=ts-t0;
+    c.clearRect(0,0,CW,CH);
+
+    // Heart progress
+    const heartProg=Math.min(1,el/T_HEART_END);
+    const fillA=el>T_COMPLETE?easeOut3(Math.min(1,(el-T_COMPLETE)/800))*0.09:0;
+    const glow=el>T_COMPLETE?easeOut3(Math.min(1,(el-T_COMPLETE)/1000)):0;
+    drawHeart(heartProg, 0.85, fillA, glow);
+
+    // "Guardemos estos recuerdos..." label
+    if(el>T_LABEL1&&el<T_PHOTO_START+500){
+      const a=Math.min(1,(el-T_LABEL1)/300)*Math.max(0,1-(el-(T_PHOTO_START+200))/400);
+      c.save();c.globalAlpha=a*0.65;
+      c.fillStyle='#e8a4b8';
+      c.font=`italic ${CW*.028}px 'Dancing Script',cursive`;
+      c.textAlign='center';
+      c.fillText('Guardemos estos recuerdos...',CX,CY+SCALE*1.05);
+      c.restore();
+    }
+
+    // Photos flying
+    photos.forEach((p,i)=>{
+      const pStart=T_PHOTO_START+i*T_PHOTO_STEP;
+      if(el>=pStart){
+        if(!p.flying){p.flying=true}
+        const fp=Math.min(1,(el-pStart)/700);
+        p.prog=easeOutBack(fp);
+        p.cx=p.sx+(p.tx-p.sx)*p.prog;
+        p.cy=p.sy+(p.ty-p.sy)*p.prog;
+        p.alpha=Math.min(1,fp*2.5);
+        if(fp>=1&&!p.landed){
+          p.landed=true;
+          addSparks(p.tx+PS/2,p.ty+PS/2,p.color);
+        }
+      }
+      drawPhoto(p);
+    });
+
+    // Sparkles
+    for(let i=sparks.length-1;i>=0;i--){
+      const s=sparks[i];
+      s.x+=s.vx;s.y+=s.vy;s.vy+=0.12;s.life-=0.035;
+      if(s.life<=0){sparks.splice(i,1);continue}
+      c.save();c.globalAlpha=s.life;
+      c.beginPath();c.arc(s.x,s.y,s.r*s.life,0,Math.PI*2);
+      c.fillStyle=s.color;c.fill();c.restore();
+    }
+
+    // Breathing pulse on complete heart
+    if(el>T_COMPLETE){
+      const breath=1+0.025*Math.sin(el*0.002);
+      // Re-draw heart with breathing scale
+      c.save();
+      c.translate(CX,CY);c.scale(breath,breath);c.translate(-CX,-CY);
+      drawHeart(1, 0.5, 0, glow*0.5);
+      c.restore();
+    }
+
+    // Final label: "Todos nuestros recuerdos, guardados aquí para siempre ♥"
+    if(el>T_LABEL2){
+      const a=easeOut3(Math.min(1,(el-T_LABEL2)/700));
+      c.save();c.globalAlpha=a;
+      c.fillStyle='rgba(250,240,230,.92)';
+      c.font=`${CW*.032}px 'Playfair Display',serif`;
+      c.textAlign='center';
+      c.fillText('Todos nuestros recuerdos,',CX,CY+SCALE*1.02);
+      c.fillStyle='#e8a4b8';
+      c.font=`italic ${CW*.038}px 'Dancing Script',cursive`;
+      c.fillText('guardados aquí para siempre ♥',CX,CY+SCALE*1.02+CW*.048);
+      c.restore();
+    }
+
+    if(!stopped)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  return()=>{stopped=true};
+}
+// ══════════════════════════════════════════════════════════════════
+
+// ── Skip + keyboard ───────────────────────────────────────────────
+document.getElementById('skip').addEventListener('click',()=>{if(cur<SCENES.length-1)go(cur+1)});
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){if(cur<SCENES.length-1)go(cur+1)}
+  if(e.key==='ArrowLeft'){if(cur>0)go(cur-1)}
+});
+const bh=document.getElementById('bigheart');
+bh.addEventListener('click',()=>go(0));
+bh.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')go(0)});
+
+// ── Start ─────────────────────────────────────────────────────────
+setTimeout(()=>go(0),400);
+</script>
+</body>
+</html>
